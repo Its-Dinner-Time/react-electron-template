@@ -1,0 +1,86 @@
+# appId = com.electron.${name} String | “undefined”
+# - The application id.
+# - Used as CFBundleIdentifier for MacOS
+# - and as Application User Model ID for Windows
+# - (NSIS target only, Squirrel.Windows not supported).
+
+# - It is strongly recommended that an explicit ID is set.
+appId: com.dinnertime.app
+
+# productName = String | “undefined”
+# - As name, but allows you to specify a product name for your executable
+# - which contains spaces and other special characters not allowed in the name property.
+
+# - If not specified inside of the build configuration,
+# - productName property defined at the top level of package.json is used.
+# - If not specified at the top level of package.json, name property is used.
+productName: Dinntertime App
+
+# copyright = Copyright © year ${author} String | “undefined”
+# - The human-readable copyright line for the app.
+copyright: Copyright © 2023 dinnertime
+
+# directories = MetadataDirectories | “undefined”
+directories:
+  output: 'electron/build'
+  buildResources: 'assets'
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+
+# true로 설정하면 파일을 asar 아카이브로 패키징하여 애플리케이션의 파일 크기를 줄일 수 있음
+asar: true
+# mac = MacConfiguration
+# - Options related to how build macOS targets.
+
+# mas = MasConfiguration
+# - MAS (Mac Application Store) options.
+
+# masDev = MasConfiguration
+# - MAS (Mac Application Store) development options (mas-dev target).
+
+# dmg = DmgOptions
+# - macOS DMG options.
+
+# pkg = PkgOptions
+# - macOS PKG options.
+
+# win = WindowsConfiguration
+# - Options related to how build Windows targets.
+
+# nsisWeb = NsisWebOptions | “undefined”
+
+# portable = PortableOptions | “undefined”
+
+# appx = AppXOptions
+
+# squirrelWindows = SquirrelWindowsOptions
+
+# linux = LinuxConfiguration
+# - Options related to how build Linux targets.
+
+# deb = DebOptions
+# - Debian package options.
+
+# snap = SnapOptions
+# - Snap options.
+
+# appImage = AppImageOptions
+# - AppImage options.
+
+# flatpak = FlatpakOptions
+# - Flatpak options.
+
+# pacman = LinuxTargetSpecificOptions
+
+# rpm = LinuxTargetSpecificOptions
+
+# freebsd = LinuxTargetSpecificOptions
+
+# p5p = LinuxTargetSpecificOptions
+
+# apk = LinuxTargetSpecificOptions
+
+# includeSubNodeModules = false Boolean
+# - Whether to include all of the submodules node_modules directories
