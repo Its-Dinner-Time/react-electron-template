@@ -1,6 +1,7 @@
 import path from 'path';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { readFileSync, existsSync } from 'fs';
+import { mkdirSync, writeFileSync } from 'original-fs';
 
 const isDev = process.env.IS_DEV == 'true' ? true : false;
 
@@ -16,17 +17,29 @@ function createWindow() {
   });
 
   ipcMain.handle('get-app-path', async (event, date) => {
-    const dataPath = path.join(app.getAppPath(), 'data', `${date}.json`);
+    try {
+      const dataPath = path.join(app.getAppPath(), '..', 'data', `${date}.json`);
 
-    if (!existsSync(dataPath)) return dataPath;
-    return readFileSync(dataPath).toString();
+      if (!existsSync(dataPath)) return null;
+      return JSON.parse(readFileSync(dataPath).toString());
+    } catch (error) {
+      return null;
+    }
   });
 
-  ipcMain.handle('write-data', async () => {});
+  ipcMain.handle('write-data', async (event, date, number) => {
+    const dataDir = path.join(app.getAppPath(), '..', 'data');
+    const dataPath = path.join(dataDir, `${date}.json`);
+
+    if (!existsSync(dataDir)) mkdirSync(dataDir);
+
+    writeFileSync(dataPath, `${number}`);
+    return { date, number };
+  });
 
   // and load the index.html of the app.
   // win.loadFile("index.html");
-  mainWindow.loadURL(isDev ? 'http://127.0.0.1:5173/' : `file://${path.join(__dirname, '../dist/index.html')}`);
+  mainWindow.loadURL(isDev ? 'http://127.0.0.1:5173/' : `file://${path.join(__dirname, '../../dist/index.html')}`);
   // Open the DevTools.
   if (isDev) {
     mainWindow.webContents.openDevTools();

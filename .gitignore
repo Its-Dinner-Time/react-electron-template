@@ -25,5 +25,7 @@ dist-ssr
 
 
 package-lock.json
+data
+build
 .env
 .env.*
