@@ -16,6 +16,19 @@ function createWindow() {
     },
   });
 
+  // and load the index.html of the app.
+  // win.loadFile("index.html");
+  mainWindow.loadURL(isDev ? 'http://127.0.0.1:5173/' : `file://${path.join(__dirname, '../../dist/index.html')}`);
+  // Open the DevTools.
+  if (isDev) {
+    mainWindow.webContents.openDevTools();
+  }
+}
+
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.whenReady().then(() => {
   ipcMain.handle('get-app-path', async (event, date) => {
     try {
       const dataPath = path.join(app.getAppPath(), '..', 'data', `${date}.json`);
@@ -37,19 +50,6 @@ function createWindow() {
     return { date, number };
   });
 
-  // and load the index.html of the app.
-  // win.loadFile("index.html");
-  mainWindow.loadURL(isDev ? 'http://127.0.0.1:5173/' : `file://${path.join(__dirname, '../../dist/index.html')}`);
-  // Open the DevTools.
-  if (isDev) {
-    mainWindow.webContents.openDevTools();
-  }
-}
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
   createWindow();
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
